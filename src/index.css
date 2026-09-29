@@ -623,8 +623,8 @@ img, svg, video, canvas { max-width: 100%; }
   .landing-navbar > div:first-child > div:last-child > span:last-child { display: none !important; }
   .landing-navbar > div:first-child > div:last-child { flex-wrap: wrap; gap: 7px 12px !important; }
   .landing-navbar__main { position: relative; flex-wrap: wrap; padding: 10px 14px !important; gap: 0 10px !important; }
-  .landing-navbar__brand { flex: 1 1 auto; min-width: 0; }
-  .landing-navbar__toggle { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; flex: 0 0 42px; color: #245743; background: #fff; border: 1px solid #dce7df; border-radius: 10px; cursor: pointer; }
+  .landing-navbar__brand { flex: 1 1 auto; min-width: 0; padding-right: 48px; }
+  .landing-navbar__toggle { position: absolute; top: 10px; right: 14px; display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; flex: 0 0 42px; color: #245743; background: #fff; border: 1px solid #dce7df; border-radius: 10px; cursor: pointer; }
   .landing-navbar__links { display: none !important; order: 3; flex: 1 1 100%; flex-direction: column; align-items: stretch !important; gap: 3px !important; padding: 10px 0 3px; }
   .landing-navbar__main.is-open .landing-navbar__links { display: flex !important; }
   .landing-navbar__links a { flex: 0 0 auto; padding: 11px 10px !important; font-size: .88rem !important; }
