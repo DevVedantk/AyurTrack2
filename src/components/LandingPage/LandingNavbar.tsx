@@ -1,5 +1,5 @@
-import React from 'react';
-import { ShieldCheck, Activity, ArrowRight, UserCheck, Sparkles, Building2 } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ShieldCheck, Activity, ArrowRight, UserCheck, Menu, X } from 'lucide-react';
 
 interface LandingNavbarProps {
   onLaunchDashboard: () => void;
@@ -10,11 +10,29 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
   onLaunchDashboard,
   onOpenAuth
 }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrollHidden, setScrollHidden] = useState(false);
+
+  useEffect(() => {
+    let previousY = window.scrollY;
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      if (window.innerWidth > 900 || currentY < 24 || menuOpen) {
+        setScrollHidden(false);
+      } else if (currentY - previousY > 6) {
+        setScrollHidden(true);
+      } else if (previousY - currentY > 6) {
+        setScrollHidden(false);
+      }
+      previousY = currentY;
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [menuOpen]);
+
   return (
-    <header className="landing-navbar" style={{
-      position: 'sticky',
-      top: 0,
-      zIndex: 100,
+    <header className={`landing-navbar${scrollHidden ? ' is-scroll-hidden' : ''}`} style={{
       background: 'rgba(255, 255, 255, 0.92)',
       backdropFilter: 'blur(12px)',
       WebkitBackdropFilter: 'blur(12px)',
@@ -23,7 +41,7 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
       transition: 'all 0.25s ease'
     }}>
       {/* Top Ministerial Notification Strip - Clean Light Botanical Style */}
-      <div style={{
+      <div className="landing-navbar__gov-strip" style={{
         background: '#f4f8f5',
         borderBottom: '1px solid #e2ece4',
         padding: '6px 24px',
@@ -63,7 +81,7 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
       </div>
 
       {/* Main Navbar */}
-      <div style={{
+      <div className={`landing-navbar__main${menuOpen ? ' is-open' : ''}`} style={{
         maxWidth: '1440px',
         margin: '0 auto',
         padding: '12px 28px',
@@ -73,7 +91,7 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
         gap: '20px'
       }}>
         {/* Brand */}
-        <div 
+        <div className="landing-navbar__brand"
           onClick={onLaunchDashboard}
           style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}
         >
@@ -122,7 +140,18 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
         </div>
 
         {/* Navigation links with smooth hover animations */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+        <button
+          type="button"
+          className="landing-navbar__toggle"
+          aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={menuOpen}
+          aria-controls="landing-navigation"
+          onClick={() => setMenuOpen(open => !open)}
+        >
+          {menuOpen ? <X size={21} /> : <Menu size={21} />}
+        </button>
+
+        <nav id="landing-navigation" className="landing-navbar__links" style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
           {[
             { href: '#overview', label: 'Portfolio Overview' },
             { href: '#features', label: 'CTMS Modules' },
@@ -133,6 +162,7 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
             <a 
               key={link.href}
               href={link.href} 
+              onClick={() => setMenuOpen(false)}
               style={{ 
                 color: '#334155', 
                 textDecoration: 'none', 
@@ -157,9 +187,9 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
         </nav>
 
         {/* Action Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div className="landing-navbar__actions" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <button
-            onClick={onOpenAuth}
+            onClick={() => { setMenuOpen(false); onOpenAuth(); }}
             className="btn-secondary"
             style={{
               padding: '8px 16px',
@@ -171,7 +201,7 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
           </button>
 
           <button
-            onClick={onLaunchDashboard}
+            onClick={() => { setMenuOpen(false); onLaunchDashboard(); }}
             className="btn-primary"
             style={{
               padding: '8px 18px',

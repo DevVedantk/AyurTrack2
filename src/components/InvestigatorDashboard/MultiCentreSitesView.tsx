@@ -36,7 +36,7 @@ export const MultiCentreSitesView: React.FC<MultiCentreSitesViewProps> = ({ stud
         </div>
 
         {/* Sites Grid */}
-        <div style={{
+        <div className="sites-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
           gap: '22px'
@@ -46,6 +46,7 @@ export const MultiCentreSitesView: React.FC<MultiCentreSitesViewProps> = ({ stud
             return (
               <div 
                 key={site.siteId}
+                className="site-card"
                 style={{
                   background: '#ffffff',
                   border: '1px solid #e2ece4',
@@ -69,7 +70,7 @@ export const MultiCentreSitesView: React.FC<MultiCentreSitesViewProps> = ({ stud
                 }}
               >
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
+                  <div className="site-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
                         <span style={{
@@ -147,7 +148,7 @@ export const MultiCentreSitesView: React.FC<MultiCentreSitesViewProps> = ({ stud
                 </div>
 
                 {/* Drug Accountability */}
-                <div style={{
+                <div className="site-card-footer" style={{
                   borderTop: '1px solid #f1f5f1',
                   paddingTop: '14px',
                   display: 'flex',

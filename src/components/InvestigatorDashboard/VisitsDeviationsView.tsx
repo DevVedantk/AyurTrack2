@@ -43,8 +43,8 @@ export const VisitsDeviationsView: React.FC<VisitsDeviationsViewProps> = ({
         </div>
 
         {/* Table of Visits */}
-        <div style={{ overflowX: 'auto', border: '1px solid #e2ece4', borderRadius: '12px' }}>
-          <table className="clean-table">
+        <div className="visit-compliance-scroll" style={{ overflowX: 'auto', border: '1px solid #e2ece4', borderRadius: '12px' }}>
+          <table className="clean-table visit-compliance-table">
             <thead>
               <tr>
                 <th>Visit Identifier</th>
@@ -59,16 +59,16 @@ export const VisitsDeviationsView: React.FC<VisitsDeviationsViewProps> = ({
             <tbody>
               {study.visits.map((v, idx) => (
                 <tr key={idx}>
-                  <td style={{ color: '#0f172a', fontWeight: 700 }}>
+                  <td data-label="Visit" style={{ color: '#0f172a', fontWeight: 700 }}>
                     {v.visitName}
                   </td>
-                  <td style={{ color: '#475569', fontFamily: 'var(--font-mono)' }}>
+                  <td data-label="Target day" style={{ color: '#475569', fontFamily: 'var(--font-mono)' }}>
                     Day {v.plannedDay > 0 ? `+${v.plannedDay}` : v.plannedDay}
                   </td>
-                  <td style={{ color: '#0f172a' }}>
+                  <td data-label="Completed / target" style={{ color: '#0f172a' }}>
                     <strong>{v.completedCount}</strong> / {v.targetCount}
                   </td>
-                  <td>
+                  <td data-label="Window violations">
                     <span style={{
                       color: v.windowViolationCount > 0 ? '#b45309' : '#047857',
                       fontWeight: v.windowViolationCount > 0 ? 700 : 500,
@@ -80,7 +80,7 @@ export const VisitsDeviationsView: React.FC<VisitsDeviationsViewProps> = ({
                       {v.windowViolationCount} violations
                     </span>
                   </td>
-                  <td>
+                  <td data-label="Missed visits">
                     <span style={{
                       color: v.missedCount > 0 ? '#dc2626' : '#64748b',
                       fontWeight: v.missedCount > 0 ? 700 : 500
@@ -88,7 +88,7 @@ export const VisitsDeviationsView: React.FC<VisitsDeviationsViewProps> = ({
                       {v.missedCount} missed
                     </span>
                   </td>
-                  <td>
+                  <td data-label="Compliance">
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <div style={{ width: '60px', height: '6px', background: '#e2ece4', borderRadius: '3px', overflow: 'hidden' }}>
                         <div style={{ width: `${v.complianceRate}%`, height: '100%', background: v.complianceRate > 95 ? '#059669' : '#b45309' }} />
@@ -96,7 +96,7 @@ export const VisitsDeviationsView: React.FC<VisitsDeviationsViewProps> = ({
                       <span style={{ color: '#0f172a', fontWeight: 700 }}>{v.complianceRate}%</span>
                     </div>
                   </td>
-                  <td>
+                  <td data-label="Status">
                     <span style={{
                       fontSize: '0.72rem',
                       fontWeight: 700,
